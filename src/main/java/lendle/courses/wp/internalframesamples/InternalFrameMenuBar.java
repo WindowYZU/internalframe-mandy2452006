@@ -8,6 +8,8 @@ package lendle.courses.wp.internalframesamples;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -42,10 +44,7 @@ public class InternalFrameMenuBar {
         frame.setJMenuBar(jMenuBar);
         JMenu menu=new JMenu("Edit");
         jMenuBar.add(menu);
-        JMenuItem item=new JMenuItem("Add");
-        menu.add(item);
-        
-        item.addActionListener(new ActionListener() {
+        Action addAction=new AbstractAction("Add") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JInternalFrame jInternalFrame=new JInternalFrame();
@@ -58,7 +57,14 @@ public class InternalFrameMenuBar {
                 jInternalFrame.setClosable(true);
                 jInternalFrame.setLocation(desktopPane.getAllFrames().length*10,desktopPane.getAllFrames().length*10);
             }
-        });
+        };
+        JMenuItem item=new JMenuItem("Add");
+        menu.add(item);
+        item.setAction(addAction);
+        JButton button=new JButton("Add");
+        button.setAction(addAction);
+        button.setBounds(0,400,100,50);
+        desktopPane.add(button);
         ////////////////////////////
         frame.setVisible(true);
     }
